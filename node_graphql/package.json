@@ -1,0 +1,15 @@
+{
+  "name": "node_graphql",
+  "version": "1.0.0",
+  "description": "Node GraphQL \"producer\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Node.JS",
+    "GraphQL"
+  ],
+  "author": "Gabriel Porto dos Santos",
+  "license": "ISC"
+}

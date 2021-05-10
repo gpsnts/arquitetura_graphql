@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "python_graphl"
+version = "0.1.0"
+description = "Python GraphQL"
+authors = ["Gabriel Porto"]
+license = "ISC"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+graphene = "^2.1.8"
+starlette = "^0.14.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
