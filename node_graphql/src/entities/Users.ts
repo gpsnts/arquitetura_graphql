@@ -5,10 +5,10 @@ export class Users extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id!: number;
 
-	@Column()
+	@Column({ nullable: true, comment: "TEST ONLY user name" })
 	name!: string;
-	@Column()
+	@Column({ nullable: true, comment: "TEST ONLY user username" })
 	username!: string;
-	@Column()
+	@Column({ nullable: true, comment: "TEST ONLY user password" })
 	password!: string;
 }

@@ -9,7 +9,7 @@ const setDatabaseConfigs = async () => {
 		username: process.env.POSTGRES_USER,
 		password: process.env.POSTGRES_PASSWORD,
 		logging: true,
-		synchronize: true,
+		synchronize: false,
 		entities: [ Users ]
 	});
 };
