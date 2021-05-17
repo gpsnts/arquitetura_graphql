@@ -1,7 +1,7 @@
 import { GraphQLObjectType, GraphQLSchema } from "graphql";
 
 // Queries
-import { GET_ALL_USERS } from "./queries/User";
+import { GET_ALL_USERS, GET_USER } from "./queries/User";
 
 // Mutations
 import { CREATE_USER, DELETE_USER, UPDATE_USER } from "./mutations/User";
@@ -9,7 +9,8 @@ import { CREATE_USER, DELETE_USER, UPDATE_USER } from "./mutations/User";
 const RQuery = new GraphQLObjectType({
 	name: "RQuery",
 	fields: {
-		getAllUsers: GET_ALL_USERS
+		getAllUsers: GET_ALL_USERS,
+		getUser:		 GET_USER
 	}
 });
 
@@ -23,6 +24,6 @@ const RMutation = new GraphQLObjectType({
 });
 
 export const schema = new GraphQLSchema({
-	query: RQuery,
+	query: 		RQuery,
 	mutation: RMutation 
 });

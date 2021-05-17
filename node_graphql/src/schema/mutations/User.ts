@@ -2,7 +2,8 @@ import { GraphQLID, GraphQLString } from "graphql";
 
 import { UserType } from "../type_defs/User"
 import { Users } from "../../entities/Users";
-import { resolve } from "path";
+import { StatusCountType, StatusEnumType } from "../type_defs/Status";
+import { DeleteResult, UpdateResult } from "typeorm";
 
 export const CREATE_USER = {
 	type: UserType,
@@ -20,21 +21,26 @@ export const CREATE_USER = {
 };
 
 export const DELETE_USER = {
-	type: UserType,
+	type: StatusCountType,
 	args: {
 		id: 		{ type: GraphQLID }
 	},
 
 	async resolve(parent: any, args: any) {
 		const ID = args.id;
-		await Users.delete(ID);
+		const deleted: DeleteResult = await Users.delete(ID);
+		
+		return {
+			status: StatusEnumType.getValue("OK")?.value,
+			count: Number(deleted.affected)
+		};
 	}
 }
 
 export const UPDATE_USER = {
-	type: UserType,
+	type: StatusCountType,
 	args: {
-		id: 					{ type: GraphQLID },
+		id: 					{ type: GraphQLID 		},
 		new_name: 		{ type: GraphQLString },
 		new_username: { type: GraphQLString }
 	},
@@ -45,6 +51,20 @@ export const UPDATE_USER = {
 
 		if (!found_user) throw new Error("User not found");	
 
-		await Users.update(id, { name: new_name, username: new_username });
+		try {
+			const updated_user: UpdateResult = await Users.update(
+				id, { name: new_name, username: new_username }
+			);
+			
+			return {
+				status: StatusEnumType.getValue("OK")?.value,
+				count: Number(updated_user.affected)
+			};
+		} catch (error) {
+			return {
+				status: StatusEnumType.getValue("ERROR")?.value,
+				count: 0
+			};
+		}
 	}
 }
