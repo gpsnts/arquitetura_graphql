@@ -1,4 +1,4 @@
-import { GraphQLID, GraphQLString } from "graphql";
+import { GraphQLID, GraphQLNonNull, GraphQLString } from "graphql";
 
 import { UserType } from "../type_defs/User"
 import { Users } from "../../entities/Users";
@@ -8,9 +8,10 @@ import { DeleteResult, UpdateResult } from "typeorm";
 export const CREATE_USER = {
 	type: UserType,
 	args: {
-		name: 		{ type: GraphQLString },
-		username: { type: GraphQLString },
-		password: { type: GraphQLString }
+		name: 			{ type: GraphQLNonNull(GraphQLString) },
+		username: 	{ type: GraphQLString },
+		password: 	{ type: GraphQLString },
+		behaviour: 	{ type: GraphQLString }
 	},
 
 	async resolve(parent: any, args: any) {
@@ -23,7 +24,7 @@ export const CREATE_USER = {
 export const DELETE_USER = {
 	type: StatusCountType,
 	args: {
-		id: 		{ type: GraphQLID }
+		id:	{ type: GraphQLID }
 	},
 
 	async resolve(parent: any, args: any) {
@@ -53,7 +54,11 @@ export const UPDATE_USER = {
 
 		try {
 			const updated_user: UpdateResult = await Users.update(
-				id, { name: new_name, username: new_username }
+				id,
+				{
+					name: new_name ? new_name : found_user.name,
+					username: new_username ? new_username : found_user.username
+				}
 			);
 			
 			return {

@@ -20,9 +20,7 @@ const main = async () => {
 		graphiql: true
 	}));
 
-	APP.listen(8080, () => console.log("Running on 8080"));
+	APP.listen(8080, () => console.log(`Running on ${process.env.PORT}`));
 };
 
-main().catch(err => {
-	console.log(`ERROR --- ${err}`);
-});
+main().catch(err => console.log(`ERROR --- ${err}`));
