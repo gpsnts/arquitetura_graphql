@@ -1,23 +1,35 @@
 import { GraphQLID, GraphQLNonNull, GraphQLString } from "graphql";
 
-import { UserType } from "../type_defs/User"
+import { UserReturnType, UserType } from "../type_defs/User"
 import { Users } from "../../entities/Users";
 import { StatusCountType, StatusEnumType } from "../type_defs/Status";
 import { DeleteResult, UpdateResult } from "typeorm";
+import { UserInputType } from "../inputs/UserInput";
 
-export const CREATE_USER = {
+export const CREATE_USER_INPUT = {
 	type: UserType,
 	args: {
+		user: { type: UserInputType }
+	},
+
+	async resolve(parent: any, args: any) {
+		await Users.insert({ ...args.user });
+		return args.user;
+	}
+};
+
+export const CREATE_USER = {
+	type: UserReturnType,
+	args: {
 		name: 			{ type: GraphQLNonNull(GraphQLString) },
-		username: 	{ type: GraphQLString },
-		password: 	{ type: GraphQLString },
+		username: 	{ type: GraphQLNonNull(GraphQLString) },
+		password: 	{ type: GraphQLNonNull(GraphQLString) },
 		behaviour: 	{ type: GraphQLString }
 	},
 
 	async resolve(parent: any, args: any) {
-		const { name, username, password } = args;
-		await Users.insert({ name, username, password });
-		return args;
+		await Users.insert({ ...args });
+		return { ...args };
 	}
 };
 

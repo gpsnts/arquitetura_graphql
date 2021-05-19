@@ -1,7 +1,6 @@
 import { createConnection } from "typeorm";
 
 import { Users } from "./entities/Users";
-import { UInput } from "./entities/UInput";
 
 const setDatabaseConfigs = async () => {
 	await createConnection({
@@ -12,7 +11,7 @@ const setDatabaseConfigs = async () => {
 		password: process.env.POSTGRES_PASSWORD,
 		logging: true,
 		synchronize: false,
-		entities: [ Users, UInput ]
+		entities: [ Users ]
 	});
 };
 

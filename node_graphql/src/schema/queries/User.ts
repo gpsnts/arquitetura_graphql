@@ -25,7 +25,7 @@ export const GET_USER = {
 };
 
 export const GET_ALL_USERS = {
-	type: new GraphQLList(UserType),
+	type: GraphQLList(UserType),
 	
 	async resolve(): Promise<Users[]> {
 		return await Users.find();

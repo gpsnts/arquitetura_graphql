@@ -12,13 +12,13 @@ export const UserType = new GraphQLObjectType({
 	interfaces: [ UserBehaviourInterfaceType ],
 	fields: () => ({
 		id: 			{ type: GraphQLID },
-		name: 		{ type: GraphQLNonNull(GraphQLString) },
+		name: 		{ type: GraphQLString },
 		username: { type: GraphQLString },
 		password: { type: GraphQLString },
 		behaviour: {
 			type: GraphQLString, 
 			resolve(parent: any, args: any) {
-				return `BEHAVIOUR [USER_INTERFACE]: ${parent.username.length % 2 == 0 ? "Even" : "Odd"}`
+				return `BEHAVIOUR [User]: ${parent.username.length % 2 == 0 ? "Par" : "Impar"}`
 			}
 		}
 	})
@@ -30,6 +30,12 @@ export const UserReturnType = new GraphQLObjectType({
 	fields: () => ({
 		name: 		{ type: GraphQLString },
 		username: { type: GraphQLString },
-		password: { type: GraphQLString }
+		password: { type: GraphQLString },
+		behaviour: {
+			type: GraphQLString, 
+			resolve(parent: any, args: any) {
+				return `BEHAVIOUR [UserReturn]: ${parent.username.length % 2 == 0 ? "Par" : "Impar"}`
+			}
+		}
 	})
 });
